@@ -52,7 +52,6 @@ class Employee {
       email: this.email,
       tasks: this.tasks,
     };
-
     let response = await this.employees.add(obj);
     return response;
   }

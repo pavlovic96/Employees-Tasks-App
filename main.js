@@ -7,7 +7,6 @@ let date = document.querySelector("#date-of-birth");
 let email = document.querySelector("#email");
 let submitEmployee = document.querySelector("#add-employee");
 let formEmployee = document.querySelector("#form-employee");
-
 let title = document.querySelector("#title");
 let description = document.querySelector("#description");
 let assignee = document.querySelector("#assignee");

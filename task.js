@@ -48,7 +48,6 @@ class Task {
       assignee: this.assignee,
       due_date: firebase.firestore.Timestamp.fromDate(ts),
     };
-
     let response = await this.tasks.add(obj);
     return response;
   }
