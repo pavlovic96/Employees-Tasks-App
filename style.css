@@ -7,40 +7,6 @@
   font-family: "Montserrat", sans-serif;
 }
 
-body {
-  background-color: #306c8a;
-}
-
-header {
-  margin: 0 20px;
-  border-bottom: 1px solid #0d374d;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #fff;
-  padding: 15px 0;
-}
-
-header h2 {
-  padding-left: 10px;
-}
-
-header .nav li {
-  display: inline-block;
-  padding-right: 10px;
-  border-left: 1px solid #0d374d;
-  padding-left: 15px;
-  font-size: 18px;
-}
-
-header .nav li:first-child {
-  border: none;
-}
-
-header .nav li:hover {
-  color: #0d374d;
-}
-
 #home-page {
   width: 600px;
   margin: 20vh auto;

@@ -1,103 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+  </head>
 
-<body>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="30"
+          fill="currentColor"
+          class="bi bi-people-fill me-3"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"
+          />
+        </svg>
+        <!-- <a class="navbar-brand" href="#">App for emloyees</a> -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="#"
+                data="home-page"
+                >Home page</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data="employee">Employee</a>
+            </li>
 
-    <header>
-        <h2>App for tasks</h2>
-
-        <ul class="nav">
-            <li data = 'home-page'>Home page</li>
-            <li data="employee">Employee</li>
-            <li data="task">Task</li>
-        </ul>
-    </header>
+            <li class="nav-item">
+              <a class="nav-link" data="task" href="#">Task</a>
+            </li>
+          </ul>
+          <form class="d-flex find" role="search">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-success" type="submit">
+              Search
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
 
     <section id="home-page">
-        <div class="top-part">
-            <h1>Employees and tasks</h1>
-        </div>
-        <div class="bottom-part">
-            <ul id="main-list">
-                <li>Task1</li>
-            </ul>
-        </div>
+      <div class="top-part">
+        <h1>Employees and tasks</h1>
+      </div>
+      <div class="bottom-part">
+        <ul id="main-list">
+          <li>Task1</li>
+        </ul>
+      </div>
     </section>
 
     <section id="employee">
-        <div class="create-new">
-            <h2>Add new employee:</h2>
-            <form action="" id="form-employee">
-                <label for="name">Name:</label>
-                <input type="text" id="name">
-                <label for="surname">Surname:</label>
-                <input type="text" id="surname">
-                <label for="date-of-birth">Date of birth:</label>
-                <input type="date" name="date-of-birth" id="date-of-birth">
-                <label for="email">E-mail:</label>
-                <input type="email" name="email" id="email">
-                <input type="button" value="Submit" id="add-employee">
-            </form>
-        </div>
-
-        <div class="search">
-            <h2>Search:</h2>
-            <input type="text" id="search-employee">
-
-            <div class="search-result">
-                <div class="details">
-                <h3>Name Surname</h3>
-                <p>19.02.1999.</p>
-                <p>pavlovicleca.gmail.com</p>
-            </div>
-            </div>
-        </div>
+      <div class="create-new">
+        <h2>Add new employee:</h2>
+        <form action="" id="form-employee">
+          <label for="name">Name:</label>
+          <input type="text" id="name" />
+          <label for="surname">Surname:</label>
+          <input type="text" id="surname" />
+          <label for="date-of-birth">Date of birth:</label>
+          <input type="date" name="date-of-birth" id="date-of-birth" />
+          <label for="email">E-mail:</label>
+          <input type="email" name="email" id="email" />
+          <input type="button" value="Submit" id="add-employee" />
+        </form>
+      </div>
     </section>
 
     <section id="task">
-<div class="create-new">
-    
-    <h2>Create new task:</h2>
-    <form action="" id="form-task">
-        <label for="title">Title:</label>
-        <input type="text" id="title">
-        <label for="description">Description:</label>
-        <textarea name="description" id="description" cols="26" rows="3"></textarea>
-        <label for="assignee">Assignee:</label>
-        <input type="text" id="assignee">
-        <label for="due-date">Due date:</label>
-        <input type="date" name="due-date" id="due-date">
-        <input type="button" value="Submit" id="add-task">
-    </form>
-</div>
-
-<div class="search">
-    <h2>Search:</h2>
-    <input type="text" id="search-employee">
-
-    <div class="search-result">
-        <div class="task-details">
-            <div class="task-row">
-        <h3>Title</h3>
-        <p>- Lorem ipsum dolor sit amet.</p>
-            </div>
-        <p>Stefan Stefanovic</p>
-        <p>Due date: 18.09.2023</p>
-    </div>
-
-</div>
+      <div class="create-new">
+        <h2>Create new task:</h2>
+        <form action="" id="form-task">
+          <label for="title">Title:</label>
+          <input type="text" id="title" />
+          <label for="description">Description:</label>
+          <textarea
+            name="description"
+            id="description"
+            cols="26"
+            rows="3"
+          ></textarea>
+          <label for="assignee">Assignee:</label>
+          <input type="text" id="assignee" />
+          <label for="due-date">Due date:</label>
+          <input type="date" name="due-date" id="due-date" />
+          <input type="button" value="Submit" id="add-task" />
+        </form>
+      </div>
     </section>
 
-
-
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-firestore.js"></script>
 
@@ -115,11 +143,13 @@
       let db = firebase.firestore();
     </script>
 
-
-
-
+    <!-- Bootstrap -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
 
     <script src="main.js" type="module"></script>
-</body>
-
+  </body>
 </html>
