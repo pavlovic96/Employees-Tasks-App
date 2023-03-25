@@ -1,6 +1,9 @@
 class Employee {
-  constructor(name, surname, dateOfBirth, email) {
-    (this.name = name), (this.surname = surname), (this.date = dateOfBirth);
+  constructor(name, surname, username, dateOfBirth, email) {
+    (this.name = name),
+      (this.surname = surname),
+      (this.username = username),
+      (this.date = dateOfBirth);
     (this.email = email),
       (this.employees = db.collection("employees")),
       (this.tasks = []);
@@ -12,6 +15,10 @@ class Employee {
 
   get surname() {
     return this._surname;
+  }
+
+  get username() {
+    return this._username;
   }
 
   get date() {
@@ -34,6 +41,10 @@ class Employee {
     }
   }
 
+  set username(u) {
+    this._username = u;
+  }
+
   set date(d) {
     this._date = d;
   }
@@ -52,9 +63,15 @@ class Employee {
       email: this.email,
       tasks: this.tasks,
     };
-    let response = await this.employees.add(obj);
+
+    let response = await this.employees.doc(this.username).set(obj);
     return response;
   }
+
+  // updateTasks(doc) {
+  //   let data = doc.data;
+  //   this.tasks = data.tasks;
+  // }
 }
 
 export default Employee;

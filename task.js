@@ -4,7 +4,8 @@ class Task {
       (this.description = desc),
       (this.assignee = assign),
       (this.dueDate = date),
-      (this.tasks = db.collection("tasks"));
+      (this.tasks = db.collection("tasks")),
+      (this.employees = db.collection("employees"));
   }
 
   get title() {
@@ -48,6 +49,11 @@ class Task {
       assignee: this.assignee,
       due_date: firebase.firestore.Timestamp.fromDate(ts),
     };
+
+    this.employees.doc(this.assignee).update({
+      tasks: firebase.firestore.FieldValue.arrayUnion(obj),
+    });
+
     let response = await this.tasks.add(obj);
     return response;
   }

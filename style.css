@@ -8,19 +8,19 @@
 }
 
 #home-page {
-  width: 600px;
-  margin: 20vh auto;
+  width: 500px;
+  margin: 50px auto;
   text-align: center;
 }
 
 .top-part {
   background-color: #0d374d;
-  padding: 30px 100px;
+  padding: 30px 10px;
   border-radius: 30px 30px 0 0;
   color: #fff;
 }
 .top-part h1 {
-  font-size: 32px;
+  font-size: 28px;
 }
 
 .bottom-part {
@@ -32,10 +32,13 @@
 
 #main-list {
   list-style: none;
+  padding: 0;
 }
 
 #main-list li {
-  font-size: 22px;
+  font-size: 12px;
+  border: 1px solid rgb(141, 31, 31);
+  width: 100%;
 }
 
 #employee {

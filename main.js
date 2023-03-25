@@ -1,8 +1,12 @@
 import Employee from "./employee.js";
 import Task from "./task.js";
+import List from "./list.js";
+
+let mainUl = document.querySelector("#main-list");
 
 let name = document.querySelector("#name");
 let surname = document.querySelector("#surname");
+let username = document.querySelector("#username");
 let date = document.querySelector("#date-of-birth");
 let email = document.querySelector("#email");
 let submitEmployee = document.querySelector("#add-employee");
@@ -14,6 +18,11 @@ let dueDate = document.querySelector("#due-date");
 let submitTask = document.querySelector("#add-task");
 let formTask = document.querySelector("#form-task");
 
+let list = new List(mainUl);
+
+list.getEmployees();
+
+//Create task
 submitTask.addEventListener("click", (e) => {
   e.preventDefault();
 
@@ -33,14 +42,19 @@ submitTask.addEventListener("click", (e) => {
     .catch((er) => {
       console.log(er);
     });
+
+  list.resetList();
+  list.getEmployees();
 });
 
+//Create employee
 submitEmployee.addEventListener("click", (e) => {
   e.preventDefault();
 
   let newEmpl = new Employee(
     name.value,
     surname.value,
+    username.value,
     date.value,
     email.value
   );
@@ -57,6 +71,8 @@ submitEmployee.addEventListener("click", (e) => {
   console.log(date.value);
 });
 
+//Navbar
+
 let ul = document.querySelector(".navbar-nav");
 let sections = document.querySelectorAll("section");
 let navLinks = document.querySelectorAll(".nav-link");
@@ -67,15 +83,12 @@ if (localStorage.getItem("page")) {
     link.classList.remove("active");
   });
 
-  search.classList.remove("d-flex");
-  search.classList.remove("d-none");
+  search.classList.remove();
 
   if (localStorage.getItem("page") === "home-page") {
     search.classList.add("d-none");
-    console.log(search);
   } else {
     search.classList.add("d-flex");
-    console.log(search);
   }
 
   navLinks.forEach((link) => {
@@ -107,10 +120,8 @@ ul.addEventListener("click", (e) => {
 
   if (a.getAttribute("data") === "home-page") {
     search.classList.add("d-none");
-    console.log(search);
   } else {
     search.classList.add("d-flex");
-    console.log(search);
   }
 
   sections.forEach((section) => {
