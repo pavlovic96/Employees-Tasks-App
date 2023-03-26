@@ -6,7 +6,8 @@ class Employee {
       (this.date = dateOfBirth);
     (this.email = email),
       (this.employees = db.collection("employees")),
-      (this.tasks = []);
+      (this.tasks = []),
+      (this.tasksLength = 0);
   }
 
   get name() {
@@ -27,6 +28,14 @@ class Employee {
 
   get email() {
     return this._email;
+  }
+
+  get tasks() {
+    return this._tasks;
+  }
+
+  get tasksLength() {
+    return this._tasksLength;
   }
 
   set name(n) {
@@ -53,6 +62,13 @@ class Employee {
     this._email = e;
   }
 
+  set tasks(t) {
+    this._tasks = t;
+  }
+
+  set tasksLength(t) {
+    this._tasksLength = t;
+  }
   async addEmployee() {
     let ts = new Date(this.date);
 
@@ -62,16 +78,12 @@ class Employee {
       date: firebase.firestore.Timestamp.fromDate(ts),
       email: this.email,
       tasks: this.tasks,
+      tasksLength: this.tasksLength,
     };
 
     let response = await this.employees.doc(this.username).set(obj);
     return response;
   }
-
-  // updateTasks(doc) {
-  //   let data = doc.data;
-  //   this.tasks = data.tasks;
-  // }
 }
 
 export default Employee;

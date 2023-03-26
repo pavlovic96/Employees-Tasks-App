@@ -22,7 +22,7 @@ let list = new List(mainUl);
 
 list.getEmployees();
 
-//Create task
+//Create a task
 submitTask.addEventListener("click", (e) => {
   e.preventDefault();
 
@@ -35,19 +35,32 @@ submitTask.addEventListener("click", (e) => {
 
   newTask
     .addTask()
-    .then((res) => {
-      console.log(res);
+    .then(() => {
       formTask.reset();
+      return newTask.updateTask();
+    })
+    .then(() => {
+      //get data for that employee and update tasksLength
+      return db.collection("employees").doc(newTask.assignee).get();
+    })
+    .then((res) => {
+      let data = res.data();
+      let length = data.tasks.length;
+      db.collection("employees").doc(res.id).update({
+        tasksLength: length,
+      });
+    })
+    .then(() => {
+      console.log("Everything updated");
+      list.resetList();
+      list.getEmployees();
     })
     .catch((er) => {
       console.log(er);
     });
-
-  list.resetList();
-  list.getEmployees();
 });
 
-//Create employee
+//Create an employee
 submitEmployee.addEventListener("click", (e) => {
   e.preventDefault();
 

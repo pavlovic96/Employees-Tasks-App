@@ -15,7 +15,7 @@ class List {
     let data = doc.data();
     let cont = `<li id='${doc.id}' class='best-employees'>
                 <p>${data.name} ${data.surname}</p>
-                <p>${data.email}</p><span>Tasks: ${data.tasks.length}</span>
+                <p>${data.email}</p><span>Tasks: ${data.tasksLength}</span>
                 </li>`;
     this.list.innerHTML += cont;
   }
@@ -25,18 +25,21 @@ class List {
   }
 
   getEmployees() {
-    this.employees.orderBy("tasks").onSnapshot((snapshot) => {
-      let changes = snapshot.docChanges();
-      changes.forEach((change) => {
-        let doc = change.doc;
-        let type = change.type;
-        console.log(type);
+    this.employees
+      .limit(3)
+      .orderBy("tasksLength", "desc")
+      .onSnapshot((snapshot) => {
+        let changes = snapshot.docChanges();
+        changes.forEach((change) => {
+          let doc = change.doc;
+          let type = change.type;
+          console.log(type);
 
-        if (type === "added") {
-          this.listItem(doc);
-        }
+          if (type === "added") {
+            this.listItem(doc);
+          }
+        });
       });
-    });
   }
 }
 
