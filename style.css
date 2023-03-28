@@ -43,91 +43,30 @@
 
 #employee {
   display: none;
+
+  width: 600px;
+  margin: 60px auto;
 }
+
 .create-new {
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 30px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
 }
 
-.create-new h2 {
-  padding: 60px;
-}
-
-.create-new form {
-  width: 600px;
-  background-color: #0d374d;
-  padding: 20px;
-  border-radius: 30px;
-}
-
-.create-new label,
-.create-new input {
-  display: block;
-  padding: 10px;
-  width: 100%;
-}
-
-.create-new input {
-  border: none;
-  border-bottom: 1px solid gray;
-  background-color: transparent;
-  margin-bottom: 10px;
-  padding: 10px;
-}
-
-.create-new input:focus {
-  outline: none;
-  font-size: 28px;
-  color: #fff;
-}
-
-.search {
-  text-align: center;
-  margin-top: 40px;
-  color: #fff;
-}
-
-.search h2 {
-  font-size: 36px;
-  padding: 30px;
-}
-
-.search input {
-  border: none;
-  border-bottom: 1px solid rgb(255, 255, 255);
-  background-color: transparent;
-  margin-bottom: 10px;
-  width: 500px;
-  font-size: 30px;
-  padding: 10px;
-  color: #fff;
-}
-
-.search input:focus {
-  outline: none;
-}
-
-.search-result {
+#employee h2 {
+  padding: 15px;
   color: #0d374d;
-  display: flex;
-  justify-content: center;
-}
-.details {
-  width: 600px;
-  background-color: #fff;
-  border-radius: 30px;
-  font-size: 1.5em;
+  text-align: center;
 }
 
-.details h3 {
-  padding: 10px;
-}
-
-.details p {
-  padding: 5px;
+.create-new input {
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid rgb(211, 209, 209);
+  margin-bottom: 5px;
+  outline: none;
+  user-select: none;
 }
 
 .create-new textarea {
@@ -139,13 +78,15 @@
 
 #task {
   display: none;
+  width: 600px;
+  margin: 100px auto;
 }
 .task-details {
   width: 600px;
   background-color: #fff;
   border-radius: 30px;
-  font-size: 1.5em;
-  padding: 10px;
+  font-size: 1.2em;
+  padding: 5px;
 }
 .task-row {
   display: flex;
