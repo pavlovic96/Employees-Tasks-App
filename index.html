@@ -66,10 +66,8 @@
               type="search"
               placeholder="Search"
               aria-label="Search"
+              id="search-input"
             />
-            <button class="btn btn-outline-success" type="submit">
-              Search
-            </button>
           </form>
         </div>
       </div>
@@ -77,7 +75,7 @@
 
     <section id="home-page">
       <div class="top-part">
-        <h1>Employees and tasks</h1>
+        <h2 class="text-dark p-3 text-center">Employees and tasks</h2>
       </div>
       <div class="bottom-part">
         <ul id="main-list"></ul>
@@ -85,8 +83,8 @@
     </section>
 
     <section id="employee">
-      <h2 class="text-dark">Add new employee:</h2>
-      <div class="create-new">
+      <h2 class="text-dark p-3 text-center">Add new employee:</h2>
+      <div class="create-new rounded-3">
         <form action="" id="form-employee" class="p-4">
           <label for="name" class="form-label ms-3">Name:</label>
           <input type="text" id="name" class="form-control" />
@@ -118,26 +116,47 @@
     </section>
 
     <section id="task">
+      <h2 class="text-dark rounded-3 p-3 text-center">Create new task:</h2>
       <div class="create-new">
-        <h2 class="text-primary">Create new task:</h2>
-        <form action="" id="form-task">
-          <label for="title" class="form-label">Title:</label>
-          <input type="text" id="title"  class="form-control"/>
-          <label for="description" class="form-label">Description:</label>
+        <form action="" id="form-task" class="p-4">
+          <label for="title" class="form-label ms-3">Title:</label>
+          <input type="text" id="title" class="form-control" />
+          <label for="description" class="form-label ms-3">Description:</label>
           <textarea
             name="description"
             id="description"
             cols="26"
-            rows="3"
+            rows="1"
           ></textarea>
-          <label for="assignee" class="form-label">Assignee:</label>
-          <input type="text" id="assignee"  class="form-control"/>
-          <label for="due-date" class="form-label">Due date:</label>
-          <input type="date" name="due-date" id="due-date"  class="form-control"/>
-          <input type="button" value="Submit" id="add-task" class="form-control" />
+          <label for="assignee" class="form-label ms-3">Assignee:</label>
+          <input type="text" id="assignee" class="form-control" />
+          <label for="due-date" class="form-label ms-3">Due date:</label>
+          <input
+            type="date"
+            name="due-date"
+            id="due-date"
+            class="form-control"
+          />
+          <button
+            type="button"
+            value="Submit"
+            id="add-task"
+            class="btn btn-success mt-2 w-100"
+          >
+            Submit
+          </button>
         </form>
       </div>
     </section>
+
+    <div class="search-area">
+      <div class="close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-chevron-compact-up" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M7.776 5.553a.5.5 0 0 1 .448 0l6 3a.5.5 0 1 1-.448.894L8 6.56 2.224 9.447a.5.5 0 1 1-.448-.894l6-3z"/>
+        </svg>
+    </div>
+      <ul class="search-list"></ul>
+    </div>
 
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.6.7/firebase-app.js"></script>

@@ -1,6 +1,7 @@
 import Employee from "./employee.js";
 import Task from "./task.js";
 import List from "./list.js";
+import Search from "./search.js";
 
 let mainUl = document.querySelector("#main-list");
 
@@ -17,10 +18,34 @@ let assignee = document.querySelector("#assignee");
 let dueDate = document.querySelector("#due-date");
 let submitTask = document.querySelector("#add-task");
 let formTask = document.querySelector("#form-task");
+let searchBtn = document.querySelector("#search-btn");
+let searchInput = document.querySelector("#search-input");
+let searchDiv = document.querySelector(".search-area");
+let searchList = document.querySelector(".search-list");
+let closeSearch = document.querySelector(".close");
 
 let list = new List(mainUl);
 
 list.getEmployees();
+
+//Search area
+searchInput.addEventListener("focus", (e) => {
+  searchList.innerHTML = "";
+  if (localStorage.getItem("page") === "employee") {
+    let searchResult = new Search(localStorage.getItem("page"), searchList);
+    searchResult.searchEmployees();
+    searchDiv.style.display = "block";
+    searchInput.addEventListener("input", (e) => {
+      searchResult.filterData(e.target.value);
+    });
+  } else {
+    console.log("Task");
+  }
+});
+
+closeSearch.addEventListener("click", () => {
+  searchDiv.style.display = "none";
+});
 
 //Create a task
 submitTask.addEventListener("click", (e) => {
@@ -33,6 +58,7 @@ submitTask.addEventListener("click", (e) => {
     dueDate.value
   );
 
+  //Adding task to an assignee
   newTask
     .addTask()
     .then(() => {
@@ -127,7 +153,8 @@ ul.addEventListener("click", (e) => {
   });
   let a = e.target;
   a.classList.add("active");
-
+  searchDiv.style.display = "none";
+  searchList.innerHTML = "";
   search.classList.remove("d-flex");
   search.classList.remove("d-none");
 
