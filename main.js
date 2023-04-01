@@ -18,7 +18,6 @@ let assignee = document.querySelector("#assignee");
 let dueDate = document.querySelector("#due-date");
 let submitTask = document.querySelector("#add-task");
 let formTask = document.querySelector("#form-task");
-let searchBtn = document.querySelector("#search-btn");
 let searchInput = document.querySelector("#search-input");
 let searchDiv = document.querySelector(".search-area");
 let searchList = document.querySelector(".search-list");
@@ -27,12 +26,12 @@ let closeSearch = document.querySelector(".close");
 let list = new List(mainUl);
 
 list.getEmployees();
-
+let searchResult = "";
 //Search area
 searchInput.addEventListener("focus", (e) => {
   searchList.innerHTML = "";
   if (localStorage.getItem("page") === "employee") {
-    let searchResult = new Search(localStorage.getItem("page"), searchList);
+    searchResult = new Search(localStorage.getItem("page"), searchList);
     searchResult.searchEmployees();
     searchDiv.style.display = "block";
     searchInput.addEventListener("input", (e) => {
@@ -45,6 +44,39 @@ searchInput.addEventListener("focus", (e) => {
 
 closeSearch.addEventListener("click", () => {
   searchDiv.style.display = "none";
+});
+
+searchList.addEventListener("click", (e) => {
+  let div = e.target.parentElement;
+  if (div.id === "pen") {
+    db.collection("employees")
+      .doc(div.parentElement.id)
+      .get()
+      .then((res) => {
+        let data = res.data();
+
+        let ts = data.date.toDate();
+        let ts1 = new Date(ts);
+        let d = ts1.getDate();
+        let m = ts1.getMonth() + 1;
+        let y = ts1.getFullYear();
+        d = String(d).padStart(2, "0");
+        m = String(m).padStart(2, "0");
+
+        name.value = data.name;
+        surname.value = data.surname;
+        username.value = res.id;
+        date.value = `${y}-${m}-${d}`;
+        email.value = data.email;
+
+        submitEmployee.innerHTML = "Update";
+        submitEmployee.classList.remove("btn-success");
+        submitEmployee.classList.add("btn-warning");
+      })
+      .catch((er) => {
+        console.log(er);
+      });
+  }
 });
 
 //Create a task
@@ -86,7 +118,7 @@ submitTask.addEventListener("click", (e) => {
     });
 });
 
-//Create an employee
+//Create an employee and update
 submitEmployee.addEventListener("click", (e) => {
   e.preventDefault();
 
@@ -98,15 +130,29 @@ submitEmployee.addEventListener("click", (e) => {
     email.value
   );
 
-  newEmpl
-    .addEmployee()
-    .then((res) => {
-      console.log(res);
-      formEmployee.reset();
-    })
-    .catch((er) => {
-      console.log(er);
-    });
+  if (submitEmployee.innerHTML === "Submit") {
+    newEmpl
+      .addEmployee()
+      .then((res) => {
+        console.log(res);
+        formEmployee.reset();
+      })
+      .catch((er) => {
+        console.log(er);
+      });
+  } else {
+    submitEmployee.classList.remove("btn-warning");
+    submitEmployee.classList.add("btn-success");
+    submitEmployee.innerHTML = "Submit";
+    newEmpl
+      .updateEmployee()
+      .then((res) => {
+        formEmployee.reset();
+      })
+      .catch((er) => {
+        console.log(er);
+      });
+  }
   console.log(date.value);
 });
 
@@ -162,6 +208,12 @@ ul.addEventListener("click", (e) => {
     search.classList.add("d-none");
   } else {
     search.classList.add("d-flex");
+    formEmployee.reset();
+    submitEmployee.classList.remove("btn-warning");
+    submitEmployee.classList.add("btn-success");
+    formTask.reset();
+    submitTask.classList.remove("btn-warning");
+    submitTask.classList.add("btn-success");
   }
 
   sections.forEach((section) => {

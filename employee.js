@@ -84,6 +84,22 @@ class Employee {
     let response = await this.employees.doc(this.username).set(obj);
     return response;
   }
+
+  async updateEmployee() {
+    let ts = new Date(this.date);
+
+    let obj = {
+      name: this.name,
+      surname: this.surname,
+      date: firebase.firestore.Timestamp.fromDate(ts),
+      email: this.email,
+      tasks: this.tasks,
+      tasksLength: this.tasksLength,
+    };
+
+    let response = await this.employees.doc(this.username).update(obj);
+    return response;
+  }
 }
 
 export default Employee;
