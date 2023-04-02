@@ -69,6 +69,7 @@ class Employee {
   set tasksLength(t) {
     this._tasksLength = t;
   }
+
   async addEmployee() {
     let ts = new Date(this.date);
 

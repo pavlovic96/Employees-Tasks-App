@@ -27,18 +27,26 @@ let list = new List(mainUl);
 
 list.getEmployees();
 let searchResult = "";
+let taskID = "";
+
 //Search area
-searchInput.addEventListener("focus", (e) => {
+searchInput.addEventListener("click", (e) => {
   searchList.innerHTML = "";
   if (localStorage.getItem("page") === "employee") {
     searchResult = new Search(localStorage.getItem("page"), searchList);
     searchResult.searchEmployees();
     searchDiv.style.display = "block";
+
     searchInput.addEventListener("input", (e) => {
       searchResult.filterData(e.target.value);
     });
-  } else {
-    console.log("Task");
+  } else if (localStorage.getItem("page") === "task") {
+    searchResult = new Search(localStorage.getItem("page"), searchList);
+    searchResult.searchTasks();
+    searchDiv.style.display = "block";
+    searchInput.addEventListener("input", (e) => {
+      searchResult.filterTasks(e.target.value);
+    });
   }
 });
 
@@ -48,34 +56,99 @@ closeSearch.addEventListener("click", () => {
 
 searchList.addEventListener("click", (e) => {
   let div = e.target.parentElement;
-  if (div.id === "pen") {
-    db.collection("employees")
-      .doc(div.parentElement.id)
-      .get()
-      .then((res) => {
-        let data = res.data();
+  if (localStorage.getItem("page") === "employee") {
+    if (div.id === "pen") {
+      db.collection("employees")
+        .doc(div.parentElement.id)
+        .get()
+        .then((res) => {
+          let data = res.data();
 
-        let ts = data.date.toDate();
-        let ts1 = new Date(ts);
-        let d = ts1.getDate();
-        let m = ts1.getMonth() + 1;
-        let y = ts1.getFullYear();
-        d = String(d).padStart(2, "0");
-        m = String(m).padStart(2, "0");
+          let ts = data.date.toDate();
+          let ts1 = new Date(ts);
+          let d = ts1.getDate();
+          let m = ts1.getMonth() + 1;
+          let y = ts1.getFullYear();
+          d = String(d).padStart(2, "0");
+          m = String(m).padStart(2, "0");
 
-        name.value = data.name;
-        surname.value = data.surname;
-        username.value = res.id;
-        date.value = `${y}-${m}-${d}`;
-        email.value = data.email;
+          name.value = data.name;
+          surname.value = data.surname;
+          username.value = res.id;
+          username.disabled = true;
+          date.value = `${y}-${m}-${d}`;
+          email.value = data.email;
 
-        submitEmployee.innerHTML = "Update";
-        submitEmployee.classList.remove("btn-success");
-        submitEmployee.classList.add("btn-warning");
-      })
-      .catch((er) => {
-        console.log(er);
-      });
+          submitEmployee.innerHTML = "Update";
+          submitEmployee.setAttribute("data", "update");
+          submitEmployee.classList.remove("btn-success");
+          submitEmployee.classList.add("btn-warning");
+        })
+        .catch((er) => {
+          console.log(er);
+        });
+    } else if (div.id === "delete") {
+      if (confirm("Are you sure you want to delete the employee?") == true) {
+        db.collection("employees")
+          .doc(div.parentElement.id)
+          .delete()
+          .then((res) => {
+            console.log("Deleted");
+            searchList.innerHTML = "";
+            searchResult = new Search(localStorage.getItem("page"), searchList);
+            searchResult.searchEmployees();
+          })
+          .catch((er) => {
+            console.log(er);
+          });
+      }
+    }
+  } else if (localStorage.getItem("page") === "task") {
+    if (div.id === "pen") {
+      db.collection("tasks")
+        .doc(div.parentElement.id)
+        .get()
+        .then((res) => {
+          let data = res.data();
+          taskID = div.parentElement.id;
+          let ts = data.due_date.toDate();
+          let ts1 = new Date(ts);
+          let d = ts1.getDate();
+          let m = ts1.getMonth() + 1;
+          let y = ts1.getFullYear();
+          d = String(d).padStart(2, "0");
+          m = String(m).padStart(2, "0");
+
+          title.value = data.title;
+          description.value = data.description;
+          assignee.value = data.assignee;
+          assignee.disabled = true;
+          date.value = `${y}-${m}-${d}`;
+
+          submitTask.innerHTML = "Update";
+          submitTask.setAttribute("data", "update");
+          submitTask.classList.remove("btn-success");
+          submitTask.classList.add("btn-warning");
+        })
+        .catch((er) => {
+          console.log(er);
+        });
+    } else if (div.id === "delete") {
+      if (confirm("Are you sure you want to delete this task?") == true) {
+        db.collection("tasks")
+          .doc(div.parentElement.id)
+          .delete()
+          .then((res) => {
+            console.log("Deleted");
+            searchList.innerHTML = "";
+            searchResult = new Search(localStorage.getItem("page"), searchList);
+            searchResult.searchTasks();
+          })
+          .catch((er) => {
+            console.log(er);
+          });
+      }
+    }
   }
 });
 
@@ -91,31 +164,49 @@ submitTask.addEventListener("click", (e) => {
   );
 
   //Adding task to an assignee
-  newTask
-    .addTask()
-    .then(() => {
-      formTask.reset();
-      return newTask.updateTask();
-    })
-    .then(() => {
-      //get data for that employee and update tasksLength
-      return db.collection("employees").doc(newTask.assignee).get();
-    })
-    .then((res) => {
-      let data = res.data();
-      let length = data.tasks.length;
-      db.collection("employees").doc(res.id).update({
-        tasksLength: length,
+
+  if (submitTask.getAttribute("data") === "submit") {
+    newTask
+      .addTask()
+      .then(() => {
+        formTask.reset();
+        return newTask.updateTask();
+      })
+      .then(() => {
+        //get data for that employee and update tasksLength
+        return db.collection("employees").doc(newTask.assignee).get();
+      })
+      .then((res) => {
+        let data = res.data();
+        let length = data.tasks.length;
+        db.collection("employees").doc(res.id).update({
+          tasksLength: length,
+        });
+      })
+      .then(() => {
+        console.log("Everything updated");
+        list.resetList();
+        list.getEmployees();
+      })
+      .catch((er) => {
+        console.log(er);
       });
-    })
-    .then(() => {
-      console.log("Everything updated");
-      list.resetList();
-      list.getEmployees();
-    })
-    .catch((er) => {
-      console.log(er);
-    });
+  } else {
+    newTask
+      .updateTask(taskID)
+      .then((res) => {
+        formTask.reset();
+        assignee.disabled = false;
+        submitTask.innerHTML = "Submit";
+        submitTask.setAttribute("data", "submit");
+        submitTask.classList.remove("btn-warning");
+        submitTask.classList.add("btn-success");
+      })
+      .catch((er) => {
+        console.log(submitEmployee.innerHTML);
+        console.log(er);
+      });
+  }
 });
 
 //Create an employee and update
@@ -130,24 +221,25 @@ submitEmployee.addEventListener("click", (e) => {
     email.value
   );
 
-  if (submitEmployee.innerHTML === "Submit") {
+  if (submitEmployee.getAttribute("data") === "submit") {
     newEmpl
       .addEmployee()
       .then((res) => {
-        console.log(res);
         formEmployee.reset();
       })
       .catch((er) => {
         console.log(er);
       });
   } else {
-    submitEmployee.classList.remove("btn-warning");
-    submitEmployee.classList.add("btn-success");
-    submitEmployee.innerHTML = "Submit";
     newEmpl
       .updateEmployee()
       .then((res) => {
         formEmployee.reset();
+        username.disabled = false;
+        submitEmployee.innerHTML = "Submit";
+        submitEmployee.setAttribute("data", "submit");
+        submitEmployee.classList.remove("btn-warning");
+        submitEmployee.classList.add("btn-success");
       })
       .catch((er) => {
         console.log(er);
@@ -206,6 +298,8 @@ ul.addEventListener("click", (e) => {
 
   if (a.getAttribute("data") === "home-page") {
     search.classList.add("d-none");
+    list.resetList();
+    list.getEmployees();
   } else {
     search.classList.add("d-flex");
     formEmployee.reset();

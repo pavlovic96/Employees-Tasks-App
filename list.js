@@ -34,7 +34,6 @@ class List {
           let doc = change.doc;
           let type = change.type;
           console.log(type);
-
           if (type === "added") {
             this.listItem(doc);
           }
