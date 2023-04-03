@@ -15,13 +15,13 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="30"
           height="30"
-          fill="currentColor"
+          fill="#333734"
           class="bi bi-people-fill me-3"
           viewBox="0 0 16 16"
         >
@@ -74,18 +74,19 @@
     </nav>
 
     <section id="home-page">
-      <div class="top-part">
-        <h2 class="text-dark p-3 text-center">Employees and tasks</h2>
-      </div>
+      <h2 class="text-warning p-3 text-center" id="top">
+        TOP <spam>3</spam> EMPLOYEES
+      </h2>
+
       <div class="bottom-part">
         <ul id="main-list"></ul>
       </div>
     </section>
 
     <section id="employee">
-      <h2 class="text-dark p-3 text-center">Add new employee:</h2>
+      <h2 class="p-3 text-center">Add new employee:</h2>
       <div class="create-new rounded-3">
-        <form action="" id="form-employee" class="p-4">
+        <form id="form-employee" class="p-4">
           <label for="name" class="form-label ms-3">Name:</label>
           <input type="text" id="name" class="form-control" />
           <label for="surname" class="form-label ms-3">Surname:</label>
@@ -116,8 +117,8 @@
     </section>
 
     <section id="task">
-      <h2 class="text-dark rounded-3 p-3 text-center">Create new task:</h2>
-      <div class="create-new">
+      <h2 class="text-dark p-3 text-center">Create new task:</h2>
+      <div class="create-new  rounded-3">
         <form action="" id="form-task" class="p-4">
           <label for="title" class="form-label ms-3">Title:</label>
           <input type="text" id="title" class="form-control" />

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
 
 * {
   margin: 0;
@@ -7,16 +7,46 @@
   font-family: "Montserrat", sans-serif;
 }
 
+body {
+  background-color: #333734 !important;
+}
+
+nav {
+  background-color: #93929189;
+}
+
 #home-page {
   width: 500px;
   margin: 50px auto;
   text-align: center;
 }
 
+#top,
+section h2 {
+  font-weight: 700;
+  font-size: 32px;
+  background-image: -webkit-linear-gradient(145deg, #ffd343, #f63719);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: hue 10s infinite linear;
+  letter-spacing: 5px;
+}
+@keyframes hue {
+  from {
+    -webkit-filter: hue-rotate(0deg);
+  }
+  to {
+    -webkit-filter: hue-rotate(-360deg);
+  }
+}
+
+#top spam {
+  font-size: 60px;
+}
+
 .bottom-part {
   min-height: 50px;
-  background-color: #dcdcdf;
-  margin-top: 1px;
+  margin: 2px;
 }
 
 #main-list {
@@ -26,29 +56,47 @@
 
 #main-list li {
   font-size: 12px;
-  border: 1px solid rgb(24, 15, 15);
+  border-radius: 10px;
+  background-color: rgba(78, 78, 77, 0.435);
   width: 100%;
+  color: rgb(77, 132, 101);
+  line-height: 1;
+  padding: 30px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px -40px 30px -28px inset;
+  margin: 4px;
 }
+
+#main-list li p {
+  font-size: 15px;
+  margin: 8px;
+  color: #7a7d7b;
+}
+
 /* /////////////////////////////// */
 #employee,
 #task {
   display: none;
-  width: 600px;
+  width: 500px;
   margin: 60px auto;
 }
 
 .create-new {
-  background-color: #f9f9f9;
+  background-color: rgba(78, 78, 77, 0.435);
+ color: rgb(150, 153, 151);
 }
 
 .create-new input {
   background-color: transparent;
   border: none;
   border-radius: 0;
-  border-bottom: 1px solid rgb(211, 209, 209);
+  border-bottom: 1px solid rgb(150, 153, 151);
   margin-bottom: 5px;
   outline: none;
   user-select: none;
+}
+
+.create-new input:focus {
+  background-color: transparent;
 }
 
 .create-new textarea {
@@ -60,6 +108,15 @@
 
 .hide {
   display: none;
+}
+
+/* search area */
+#search-input {
+  width: 300px;
+  background-color:transparent;
+  outline: none;
+  border: 1px solid rgb(60, 58, 58);
+  color:white ;
 }
 
 .search-area {
