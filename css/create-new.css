@@ -1,0 +1,52 @@
+#employee,
+#task {
+  display: none;
+  width: 500px;
+  margin: 60px auto;
+}
+
+section h2 {
+  font-weight: 700;
+  font-size: 32px;
+  background-image: -webkit-linear-gradient(145deg, #ffd343, #f63719);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: hue 10s infinite linear;
+  letter-spacing: 5px;
+}
+
+@keyframes hue {
+  from {
+    -webkit-filter: hue-rotate(0deg);
+  }
+  to {
+    -webkit-filter: hue-rotate(-360deg);
+  }
+}
+.create-new {
+  background-color: rgba(78, 78, 77, 0.435);
+  color: rgb(150, 153, 151);
+}
+
+.create-new input,
+.create-new textarea {
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid rgb(150, 153, 151);
+  margin-bottom: 5px;
+  outline: none;
+  user-select: none;
+}
+
+.create-new input:focus,
+.create-new textarea:focus {
+  background-color: transparent;
+}
+
+.create-new input:disabled {
+  background-color: rgba(82, 82, 81, 0.299);
+}
+.hide {
+  display: none;
+}

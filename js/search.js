@@ -41,15 +41,16 @@ class Search {
 
     let listItem = document.createElement("li");
     listItem.id = doc.id;
+    listItem.setAttribute("data-s", "search");
     listItem.innerHTML = `
-            <h5>${data.title}</h5>
-            <p>Assignee: ${data.assignee}</p>
-            <p>Due date: ${this.setDate(data)}</p>
-            <div id="pen">
-              <img src='img/pen.svg'>
+            <h5 data-s='search'>${data.title}</h5>
+            <p data-s='search'>Assignee: <span>${data.assignee}</span></p>
+            <p data-s='search'>Due date: ${this.setDate(data)}</p>
+            <div id="pen" data-s='search'>
+              <img src='img/pen.svg' data-s='search'>
             </div>
-            <div id="delete">
-              <img src='img/delete.svg'>
+            <div id="delete" data-s='search'>
+              <img src='img/delete.svg' data-s='search'>
             </div>
     `;
 
@@ -61,15 +62,16 @@ class Search {
     let data = doc.data();
 
     let listItem = document.createElement("li");
+    listItem.setAttribute("data-s", "search");
     listItem.id = doc.id;
     listItem.innerHTML = `
-            <h5>${data.name} ${data.surname} </h5><span>${data.email}</span>
-            <p>Number of tasks: ${data.tasksLength}</p>
-            <div id="pen">
-              <img src='img/pen.svg'>
+            <h5 data-s='search'>${data.name} ${data.surname} </h5><span data-s='search'>${data.email}</span>
+            <p data-s='search'>Number of tasks: ${data.tasksLength}</p>
+            <div id="pen" data-s='search'>
+              <img src='img/pen.svg' data-s='search'>
             </div>
-            <div id="delete">
-              <img src='img/delete.svg'>
+            <div id="delete" data-s='search'>
+              <img src='img/delete.svg' data-s='search'>
             </div>
     `;
 

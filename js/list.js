@@ -14,8 +14,9 @@ class List {
   listItem(doc) {
     let data = doc.data();
     let cont = `<li id='${doc.id}' class='best-employees'>
-                <p>${data.name} ${data.surname}</p>
-                <p>${data.email}</p><span>Tasks: ${data.tasksLength}</span>
+                <h3>${data.name} ${data.surname}</h3>
+                <p>${data.email}</p>
+                <p>Tasks: ${data.tasksLength}</p>
                 </li>`;
     this.list.innerHTML += cont;
   }

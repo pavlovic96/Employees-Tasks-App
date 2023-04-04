@@ -56,17 +56,8 @@ class Task {
 
   //update task in assignee tasks list
   async updateTask() {
-    let ts = new Date(this.dueDate);
-
-    let obj = {
-      title: this.title,
-      description: this.description,
-      assignee: this.assignee,
-      due_date: firebase.firestore.Timestamp.fromDate(ts),
-    };
-
     let response = await this.employees.doc(this.assignee).update({
-      tasks: firebase.firestore.FieldValue.arrayUnion(obj),
+      tasks: firebase.firestore.FieldValue.arrayUnion(this.title),
     });
 
     return response;
@@ -75,14 +66,11 @@ class Task {
   async updateFullTask(taskID) {
     let ts = new Date(this.dueDate);
 
-    let obj = {
+    let response = await this.employees.doc(taskID).update({
       title: this.title,
       description: this.description,
-      assignee: this.assignee,
       due_date: firebase.firestore.Timestamp.fromDate(ts),
-    };
-
-    let response = await this.employees.doc(taskID).update(obj);
+    });
     return response;
   }
 }

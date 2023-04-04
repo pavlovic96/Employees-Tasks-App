@@ -59,7 +59,11 @@ class Employee {
   }
 
   set email(e) {
-    this._email = e;
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(e)) {
+      this._email = e;
+    } else {
+      alert("You have entered an invalid email address!");
+    }
   }
 
   set tasks(t) {
@@ -89,16 +93,12 @@ class Employee {
   async updateEmployee() {
     let ts = new Date(this.date);
 
-    let obj = {
+    let response = await this.employees.doc(this.username).update({
       name: this.name,
       surname: this.surname,
       date: firebase.firestore.Timestamp.fromDate(ts),
       email: this.email,
-      tasks: this.tasks,
-      tasksLength: this.tasksLength,
-    };
-
-    let response = await this.employees.doc(this.username).update(obj);
+    });
     return response;
   }
 }

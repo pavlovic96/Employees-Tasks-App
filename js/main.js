@@ -4,7 +4,6 @@ import List from "./list.js";
 import Search from "./search.js";
 
 let mainUl = document.querySelector("#main-list");
-
 let name = document.querySelector("#name");
 let surname = document.querySelector("#surname");
 let username = document.querySelector("#username");
@@ -21,37 +20,42 @@ let formTask = document.querySelector("#form-task");
 let searchInput = document.querySelector("#search-input");
 let searchDiv = document.querySelector(".search-area");
 let searchList = document.querySelector(".search-list");
-let closeSearch = document.querySelector(".close");
 
 let list = new List(mainUl);
-
 list.getEmployees();
+
 let searchResult = "";
 let taskID = "";
 
 //Search area
 searchInput.addEventListener("click", (e) => {
-  searchList.innerHTML = "";
-  if (localStorage.getItem("page") === "employee") {
-    searchResult = new Search(localStorage.getItem("page"), searchList);
-    searchResult.searchEmployees();
-    searchDiv.style.display = "block";
-
-    searchInput.addEventListener("input", (e) => {
-      searchResult.filterData(e.target.value);
-    });
-  } else if (localStorage.getItem("page") === "task") {
-    searchResult = new Search(localStorage.getItem("page"), searchList);
-    searchResult.searchTasks();
-    searchDiv.style.display = "block";
-    searchInput.addEventListener("input", (e) => {
-      searchResult.filterTasks(e.target.value);
-    });
+  if (window.getComputedStyle(searchDiv).display !== "block") {
+    searchList.innerHTML = "";
+    if (localStorage.getItem("page") === "employee") {
+      searchResult = new Search(localStorage.getItem("page"), searchList);
+      searchResult.searchEmployees();
+      searchDiv.style.display = "block";
+      searchInput.addEventListener("input", (e) => {
+        searchResult.filterData(e.target.value);
+      });
+    } else if (localStorage.getItem("page") === "task") {
+      searchResult = new Search(localStorage.getItem("page"), searchList);
+      searchResult.searchTasks();
+      searchDiv.style.display = "block";
+      searchInput.addEventListener("input", (e) => {
+        searchResult.filterTasks(e.target.value);
+      });
+    }
   }
 });
 
-closeSearch.addEventListener("click", () => {
-  searchDiv.style.display = "none";
+window.addEventListener("click", (e) => {
+  if (window.getComputedStyle(searchDiv).display === "block") {
+    if (e.target.getAttribute("data-s") !== "search") {
+      searchDiv.style.display = "none";
+      searchInput.value = "";
+    }
+  }
 });
 
 searchList.addEventListener("click", (e) => {
@@ -123,7 +127,7 @@ searchList.addEventListener("click", (e) => {
           description.value = data.description;
           assignee.value = data.assignee;
           assignee.disabled = true;
-          date.value = `${y}-${m}-${d}`;
+          dueDate.value = `${y}-${m}-${d}`;
 
           submitTask.innerHTML = "Update";
           submitTask.setAttribute("data", "update");
@@ -139,10 +143,35 @@ searchList.addEventListener("click", (e) => {
           .doc(div.parentElement.id)
           .delete()
           .then((res) => {
-            console.log("Deleted");
             searchList.innerHTML = "";
             searchResult = new Search(localStorage.getItem("page"), searchList);
             searchResult.searchTasks();
+
+            let assigneeSpan = div.parentElement.querySelector("span");
+            let taskTitle = div.parentElement.querySelector("h5");
+
+            return db
+              .collection("employees")
+              .doc(assigneeSpan.innerHTML)
+              .update({
+                tasks: firebase.firestore.FieldValue.arrayRemove(
+                  taskTitle.innerHTML
+                ),
+              })
+              .then((res) => {
+                //get data for that employee and update tasksLength
+                return db
+                  .collection("employees")
+                  .doc(assigneeSpan.innerHTML)
+                  .get();
+              })
+              .then((res) => {
+                let data = res.data();
+                let length = data.tasks.length;
+                db.collection("employees").doc(res.id).update({
+                  tasksLength: length,
+                });
+              });
           })
           .catch((er) => {
             console.log(er);
@@ -224,7 +253,7 @@ submitEmployee.addEventListener("click", (e) => {
   if (submitEmployee.getAttribute("data") === "submit") {
     newEmpl
       .addEmployee()
-      .then((res) => {
+      .then(() => {
         formEmployee.reset();
       })
       .catch((er) => {

@@ -1,0 +1,94 @@
+#search-input {
+  width: 300px;
+  background-color: transparent;
+  outline: none;
+  border: 1px solid rgb(60, 58, 58);
+  color: white;
+}
+
+.search-area {
+  width: 300px;
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  display: none;
+  height: 300px;
+  overflow: auto;
+}
+
+.search-area .search-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.search-area .search-list li {
+  padding: 10px;
+  background-color: #333734;
+  border-bottom: 1px solid rgb(83, 82, 82);
+  color: rgb(209, 206, 206);
+  line-height: 1.2;
+  position: relative;
+}
+
+.search-area .search-list li h5 {
+  font-size: 16px;
+  margin-bottom: 0;
+}
+.search-area .search-list li span {
+  color: rgb(165, 165, 165);
+  font-size: 11px;
+}
+.search-area .search-list li p {
+  margin-top: 3px;
+  margin-bottom: 0;
+  font-size: 12px;
+}
+.search-area .search-list li #delete {
+  position: absolute;
+  right: 12px;
+  top: 28px;
+  width: 22px;
+}
+
+.search-area .search-list li #pen {
+  position: absolute;
+  right: 50px;
+  top: 28px;
+  width: 22px;
+  transition: 0.3s;
+}
+.search-area .search-list li #pen:hover,
+.search-area .search-list li #delete:hover {
+  width: 24px;
+}
+
+.search-area .search-list li img {
+  width: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(98, 97, 97);
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgb(255, 255, 255);
+  border-radius: 5px;
+  margin: 1px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: rgb(188, 188, 187);
+}
+
+@media only screen and (max-width: 1160px) {
+  .search-area {
+    position: static;
+    width: 100%;
+  }
+}
