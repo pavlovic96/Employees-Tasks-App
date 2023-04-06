@@ -26,6 +26,7 @@ list.getEmployees();
 
 let searchResult = "";
 let taskID = "";
+let usernameList = [];
 
 //Search area
 searchInput.addEventListener("click", (e) => {
@@ -49,6 +50,7 @@ searchInput.addEventListener("click", (e) => {
   }
 });
 
+//Close search area
 window.addEventListener("click", (e) => {
   if (window.getComputedStyle(searchDiv).display === "block") {
     if (e.target.getAttribute("data-s") !== "search") {
@@ -58,6 +60,7 @@ window.addEventListener("click", (e) => {
   }
 });
 
+//Search area - update and delete
 searchList.addEventListener("click", (e) => {
   let div = e.target.parentElement;
   if (localStorage.getItem("page") === "employee") {
@@ -192,37 +195,49 @@ submitTask.addEventListener("click", (e) => {
     dueDate.value
   );
 
-  //Adding task to an assignee
+  //Creating task
 
   if (submitTask.getAttribute("data") === "submit") {
     newTask
-      .addTask()
-      .then(() => {
-        formTask.reset();
-        return newTask.updateTask();
-      })
-      .then(() => {
-        //get data for that employee and update tasksLength
-        return db.collection("employees").doc(newTask.assignee).get();
-      })
+      .allAssignees()
       .then((res) => {
-        let data = res.data();
-        let length = data.tasks.length;
-        db.collection("employees").doc(res.id).update({
-          tasksLength: length,
-        });
-      })
-      .then(() => {
-        console.log("Everything updated");
-        list.resetList();
-        list.getEmployees();
+        if (newTask.checkAss(res)) {
+          //if assegnee exists in db
+          return newTask
+            .addTask()
+            .then(() => {
+              formTask.reset();
+              return newTask.updateTask();
+            })
+            .then(() => {
+              //get data for that employee and update tasksLength
+              return db.collection("employees").doc(newTask.assignee).get();
+            })
+            .then((res) => {
+              let data = res.data();
+              let length = data.tasks.length;
+              db.collection("employees").doc(res.id).update({
+                tasksLength: length,
+              });
+            })
+            .then(() => {
+              console.log("Everything updated");
+              list.resetList();
+              list.getEmployees();
+            })
+            .catch((er) => {
+              console.log(er);
+            });
+        } else {
+          alert("Assignee doesn't exist!");
+        }
       })
       .catch((er) => {
         console.log(er);
       });
   } else {
     newTask
-      .updateTask(taskID)
+      .updateTask(taskID) //Update task
       .then((res) => {
         formTask.reset();
         assignee.disabled = false;
@@ -252,9 +267,20 @@ submitEmployee.addEventListener("click", (e) => {
 
   if (submitEmployee.getAttribute("data") === "submit") {
     newEmpl
-      .addEmployee()
-      .then(() => {
-        formEmployee.reset();
+      .allUsernames()
+      .then((res) => {
+        if (newEmpl.checkUsername(res)) {
+          return newEmpl
+            .addEmployee()
+            .then(() => {
+              formEmployee.reset();
+            })
+            .catch((er) => {
+              console.log(er);
+            });
+        } else {
+          alert("Username already exists!");
+        }
       })
       .catch((er) => {
         console.log(er);
@@ -262,7 +288,7 @@ submitEmployee.addEventListener("click", (e) => {
   } else {
     newEmpl
       .updateEmployee()
-      .then((res) => {
+      .then(() => {
         formEmployee.reset();
         username.disabled = false;
         submitEmployee.innerHTML = "Submit";

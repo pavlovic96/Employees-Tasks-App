@@ -74,6 +74,26 @@ class Employee {
     this._tasksLength = t;
   }
 
+  async allUsernames() {
+    const usernames = [];
+    await this.employees.get().then((querySnapshot) => {
+      querySnapshot.docs.forEach((doc) => {
+        usernames.push(doc.id);
+      });
+    });
+    return usernames;
+  }
+
+  checkUsername(list) {
+    let doesntExist = true;
+    for (let i = 0; i < list.length; i++) {
+      if (list[i] === this.username) {
+        doesntExist = false;
+      }
+    }
+    return doesntExist;
+  }
+
   async addEmployee() {
     let ts = new Date(this.date);
 

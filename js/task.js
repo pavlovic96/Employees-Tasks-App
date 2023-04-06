@@ -40,6 +40,24 @@ class Task {
     this._dueDate = d;
   }
 
+  async allAssignees() {
+    const ass = [];
+    await this.employees.get().then((querySnapshot) => {
+      querySnapshot.docs.forEach((doc) => {
+        ass.push(doc.id);
+      });
+    });
+    return ass;
+  }
+
+  checkAss(list) {
+    for (let i = 0; i < list.length; i++) {
+      if (list[i] === this.assignee) {
+        return true;
+      }
+    }
+  }
+
   async addTask() {
     let ts = new Date(this.dueDate);
 
