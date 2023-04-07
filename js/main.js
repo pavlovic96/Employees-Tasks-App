@@ -20,6 +20,8 @@ let formTask = document.querySelector("#form-task");
 let searchInput = document.querySelector("#search-input");
 let searchDiv = document.querySelector(".search-area");
 let searchList = document.querySelector(".search-list");
+let messEmployee = document.querySelector("#message-employee");
+let messTask = document.querySelector("#message-task");
 
 let list = new List(mainUl);
 list.getEmployees();
@@ -224,6 +226,10 @@ submitTask.addEventListener("click", (e) => {
               console.log("Everything updated");
               list.resetList();
               list.getEmployees();
+              messTask.innerHTML = "Task successfully added!";
+              setTimeout(() => {
+                messTask.innerHTML = "";
+              }, 3000);
             })
             .catch((er) => {
               console.log(er);
@@ -245,6 +251,10 @@ submitTask.addEventListener("click", (e) => {
         submitTask.setAttribute("data", "submit");
         submitTask.classList.remove("btn-warning");
         submitTask.classList.add("btn-success");
+        messTask.innerHTML = "Task successfully updated!";
+        setTimeout(() => {
+          messTask.innerHTML = "";
+        }, 3000);
       })
       .catch((er) => {
         console.log(submitEmployee.innerHTML);
@@ -274,6 +284,10 @@ submitEmployee.addEventListener("click", (e) => {
             .addEmployee()
             .then(() => {
               formEmployee.reset();
+              messEmployee.innerHTML = "Employee successfully added!";
+              setTimeout(() => {
+                messEmployee.innerHTML = "";
+              }, 3000);
             })
             .catch((er) => {
               console.log(er);
@@ -295,6 +309,10 @@ submitEmployee.addEventListener("click", (e) => {
         submitEmployee.setAttribute("data", "submit");
         submitEmployee.classList.remove("btn-warning");
         submitEmployee.classList.add("btn-success");
+        messEmployee.innerHTML = "Employee successfully updated!";
+        setTimeout(() => {
+          messEmployee.innerHTML = "";
+        }, 3000);
       })
       .catch((er) => {
         console.log(er);

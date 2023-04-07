@@ -2,7 +2,7 @@
 #task {
   display: none;
   width: 500px;
-  margin: 60px auto;
+  margin: 40px auto;
 }
 
 section h2 {
@@ -49,4 +49,10 @@ section h2 {
 }
 .hide {
   display: none;
+}
+
+#message-employee,
+#message-task {
+  text-align: center;
+  margin-top: 20px;
 }
