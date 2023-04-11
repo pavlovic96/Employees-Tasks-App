@@ -12,7 +12,7 @@ section h2 {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: hue 10s infinite linear;
-  letter-spacing: 5px;
+  letter-spacing: 4px;
 }
 
 @keyframes hue {
@@ -55,4 +55,24 @@ section h2 {
 #message-task {
   text-align: center;
   margin-top: 20px;
+}
+
+@media only screen and (max-width: 530px) {
+  #employee,
+  #task {
+    display: none;
+    width: 100%;
+    margin: 20px auto;
+    border-radius: 0;
+  }
+
+  section h2 {
+    font-size: 22px;
+    letter-spacing: 3px;
+  }
+  .create-new input,
+  .create-new textarea {
+    margin-bottom: 2px;
+    font-size: 16px;
+  }
 }

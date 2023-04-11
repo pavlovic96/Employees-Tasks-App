@@ -71,3 +71,30 @@ nav {
   margin: 8px;
   color: #7a7d7b;
 }
+
+@media only screen and (max-width: 530px) {
+  #home-page {
+    width: 100%;
+    border-radius: 0;
+    margin: 0;
+  }
+
+  #main-list-top {
+    font-size: 22px;
+    letter-spacing: 3px;
+    padding: 10px;
+  }
+  #main-list-top span {
+    font-size: 40px;
+  }
+  #main-list li {
+    padding: 20px;
+    border-radius: 0;
+  }
+  #main-list li h3 {
+    font-size: 18px;
+  }
+  #main-list li p {
+    font-size: 12px;
+  }
+}
