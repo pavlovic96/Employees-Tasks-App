@@ -28,7 +28,6 @@ list.getEmployees();
 
 let searchResult = "";
 let taskID = "";
-let usernameList = [];
 
 //Search area
 searchInput.addEventListener("click", (e) => {
@@ -147,23 +146,22 @@ searchList.addEventListener("click", (e) => {
         db.collection("tasks")
           .doc(div.parentElement.id)
           .delete()
-          .then((res) => {
+          .then(() => {
             searchList.innerHTML = "";
             searchResult = new Search(localStorage.getItem("page"), searchList);
             searchResult.searchTasks();
 
             let assigneeSpan = div.parentElement.querySelector("span");
-            let taskTitle = div.parentElement.querySelector("h5");
 
             return db
               .collection("employees")
               .doc(assigneeSpan.innerHTML)
               .update({
                 tasks: firebase.firestore.FieldValue.arrayRemove(
-                  taskTitle.innerHTML
+                  div.parentElement.id
                 ),
               })
-              .then((res) => {
+              .then(() => {
                 //get data for that employee and update tasksLength
                 return db
                   .collection("employees")
@@ -207,9 +205,9 @@ submitTask.addEventListener("click", (e) => {
           //if assegnee exists in db
           return newTask
             .addTask()
-            .then(() => {
+            .then((res) => {
               formTask.reset();
-              return newTask.updateTask();
+              return newTask.updateTask(res.id);
             })
             .then(() => {
               //get data for that employee and update tasksLength
@@ -243,8 +241,11 @@ submitTask.addEventListener("click", (e) => {
       });
   } else {
     newTask
-      .updateTask(taskID) //Update task
-      .then((res) => {
+      .updateFullTask(taskID) //Update task
+      .then(() => {
+        return newTask.updateTask(taskID);
+      })
+      .then(() => {
         formTask.reset();
         assignee.disabled = false;
         submitTask.innerHTML = "Submit";
